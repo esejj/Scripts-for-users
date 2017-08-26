@@ -6,7 +6,8 @@
 
 * ####  Do realizacji
 ```
-BRAK
+1. BlockTime (Kuba_2003TV)
+ - Planowany czas realizacji: 08.09.2017
 ```
 * #### W trakcie realizacji
 ```
