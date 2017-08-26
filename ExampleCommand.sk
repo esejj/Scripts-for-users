@@ -1,0 +1,13 @@
+# Jeśli chciałbyś skrypt na zwykłą komendę
+# Zawsze możesz edytować skrypt poniżej! :D
+
+command /example: # <- tu ustawiasz komende
+	description: Opis komendy
+	trigger:
+		send "Pierwsza linijka tekstu po wywolaniu komendy" to the player
+# 1 tab + 1 tab
+		# i tu dajemy send "Wiadomosc..." to the player
+		send "Druga linijka tekstu po wywolaniu komendy" to the player
+		send "&6Kolorowanie" to the player
+		send "&3lololool" to the player
+		send "Tak sie wlasnie koloruje" to the player
