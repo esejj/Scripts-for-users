@@ -18,7 +18,8 @@ BRAK
 ```
 * #### Projekty odrzucone
 ```
-BRAK
+1. BungeeChat (Crystal_PL)
+ - Powód: Tymczasowo jest to nie możliwe w skrypcie.
 ```
 ---
 ##### Wszystkie skrypty powyżej są autorskie nie są skopiowane z internetu.
