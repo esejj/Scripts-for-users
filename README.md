@@ -16,6 +16,10 @@ BRAK
 ```
 BRAK
 ```
+* #### Projekty odrzucone
+```
+BRAK
+```
 ---
 ##### Wszystkie skrypty powyżej są autorskie nie są skopiowane z internetu.
 ##### Licencja oczywiście [GPU](https://github.com/esejj/Scripts-for-users/blob/master/LICENSE)
