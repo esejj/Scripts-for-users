@@ -8,13 +8,12 @@
 ```
 1. BlockTime (Kuba_2003TV)
  - Planowany czas realizacji: 08.09.2017
-2. BackpackExtras (pvndaa)
- - Planowany czas zrealizowania: 30.08.2017
 [ Ogólny projekt; BedWars]
 ```
 * #### W trakcie realizacji
 ```
-BRAK
+1. BackpackExtras (pvndaa)
+ - Planowany czas zrealizowania: 30.08.2017
 ```
 * #### Zrealizowane
 ```
