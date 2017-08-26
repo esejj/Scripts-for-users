@@ -8,6 +8,8 @@
 ```
 1. BlockTime (Kuba_2003TV)
  - Planowany czas realizacji: 08.09.2017
+2. BackpackExtras (pvndaa)
+ - Planowany czas zrealizowania: 30.08.2017
 ```
 * #### W trakcie realizacji
 ```
@@ -20,7 +22,7 @@ BRAK
 * #### Projekty odrzucone
 ```
 1. BungeeChat (Crystal_PL)
- - Powód: Tymczasowo jest to nie możliwe w skrypcie.
+ - Powód: Tymczasowo jest to nie do zrealizowania.
 ```
 ---
 ##### Wszystkie skrypty powyżej są autorskie nie są skopiowane z internetu.
