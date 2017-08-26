@@ -4,7 +4,7 @@
 ---
 ### Poniżej znajduje się lista na której możecie zobaczyć spis skryptów, które robie dla was :]
 
-* ####  Do zrobienia
+* ####  Do realizacji
 ```
 BRAK
 ```
@@ -12,7 +12,7 @@ BRAK
 ```
 BRAK
 ```
-* #### Gotowe
+* #### Zrealizowane
 ```
 BRAK
 ```
