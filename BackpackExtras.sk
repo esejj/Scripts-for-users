@@ -1,0 +1,108 @@
+# BackpackExtras
+# created by esej
+# 14.09.2017 14:20
+
+on load:
+	if folder "plugins/BackpackExtras" doesn't exists:
+		create folder "plugins/BackpackExtras"
+		create file "plugins/BackpackExtras/config.yml"
+		create file "plugins/BackpackExtras/messages.yml"
+		wf "// Ilosc linijek plecaka" to "plugins/BackpackExtras/config.yml"
+		wf "BackpackRows: '6'" to "plugins/BackpackExtras/config.yml"
+		wf "// Nazwa plecaka. Dostepne zmienne: (PLAYER)" to "plugins/BackpackExtras/config.yml"
+		wf "BackpackName: '&2Plecak gracza &7(PLAYER)" to "plugins/BackpackExtras/config.yml"
+		wf "// Przedmiot plecaka." to "plugins/BackpackExtras/config.yml"
+		wf "BackpackItem: 'chest'" to "plugins/BackpackExtras/config.yml"
+		# w i a d o m o s c i
+		wf "GivedBackpack: '&8» &7Pomyslnie dales plecak &6(PLAYER)" to "plugins/BackpackExtras/messages.yml"
+		wf "ErrorMessage: '&cAn internal error has occurred. Please try again later...'" to "plugins/BackpackExtras/messages.yml"
+		wf "NotNickname_ClearBackpack: '&4Blad: &cNie podales nicku gracza, ktoremu chcesz wyczyscic plecak.'" to "plugins/BackpackExtras/messages.yml"
+		wf "ClearedBy: '&7Twoj plecak zostal wyczyszczony przez &6(PLAYER)'" to "plugins/BackpackExtras/messages.yml"
+		wf "Cleared: '&7Pomyslnie wyczysciles plecak gracza &6(PLAYER2)'" to "plugins/BackpackExtras/messages.yml"
+		wf "NotYourBackpack: '&8» &cNajwyrazniej nie jest to twoj plecak...'" to "plugins/BackpackExtras/messages.yml"
+		wf "Close: '&8» &cPomyslnie zamknieto plecak'" to "plugins/BackpackExtras/messages.yml"
+	set {BackpackExtras::BackpackRows} to single value "BackpackRows" get of "plugins/BackpackExtras/config.yml"
+	set {BackpackExtras::BackpackName} to coloured value "BackpackName" get of "plugins/BackpackExtras/config.yml"
+	set {BackpackExtras::BackpackItem} to single value "BackpackItem" get of "plugins/BackpackExtras/config.yml"
+	# Load messages
+	set {MSG_GIVED_Backpack} to coloured value "GivedBackpack" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_ERROR} to coloured value "ErrorMessage" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_NNCB} to coloured value "NotNickname_ClearBackpack" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_CLEAREDBY} to coloured value "ClearedBy" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_CLEARED} to coloured value "Cleared" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_NOTYOURBackpack} to coloured value "NotYourBackpack" get of "plugins/BackpackExtras/messages.yml"
+	set {MSG_CLOSE} to coloured value "Close" get of "plugins/BackpackExtras/messages.yml"
+
+command /BackpackExtras:BackpackExtras [<text>] [<text>]:
+	description: Zarządzanie plecakami.
+	aliases: /BackpackExtras, bextras
+	trigger:
+		if argument 1 is "give":
+			if argument 2 is set:
+				if argument 2 is player:
+					set {_player} to the argument 2
+				else:
+					set {_player} to the player
+			if {BackpackExtras::BackpackItem} is set:
+				if {BackpackExtras::BackpackName} is set:
+					replace all "(PLAYER)" with "%{_player}%" in {BackpackExtras:BackpackName}
+					give 1 {BackpackExtras::BackpackItem} parsed as item type named "%{BackpackExtras::BackpackName}%" to {_player}
+					replace all "(PLAYER)" with "%{_player}%" in {MSG_GIVED_Backpack}
+					send "%{MSG_GIVED_Backpack}%" to the player
+				else:
+					send "&4Blad: &cPlik konfiguracyjny nie wykryl domyslnej nazwy plecaka..." to all ops
+					send "&cExecutor &8» &7%player%" to all ops
+					send "%{MSG_ERROR}%" to the player
+			else:
+					send "&4Blad: &cPlik konfiguracyjny nie wykryl domyslnego przedmiotu plecaka..." to all ops
+					send "&cExecutor &8» &7%player%" to all ops
+					send "%{MSG_ERROR}%" to the player
+		if argument 1 is "clear":
+			if argument 2 is player:
+				loop ({BackpackExtras::BackpackRows} / 9 - 1) times:
+					clear {BackpackExtras::Backpack::%player%::slot::%loop-number%}
+				replace all "(PLAYER)" with "%player%" in {MSG_CLEAREDBY}
+				send "%{MSG_CLEAREDBY}%" to the argument 2 parsed as player
+				replace all "(PLAYER)" with "%the argument 2 parsed as player%" in {MSG_CLEARED}
+				send "%{MSG_CLEARED}%" to the player 
+			else:
+				send "%{MSG_NNCB}%" to the player 
+
+on right click:
+	if {BackpackExtras::BackpackItem} is set:
+		if tool of player is {BackpackExtras::BackpackItem} parsed as item type:
+			replace all "(PLAYER)" with "%{_player}%" in {BackpackExtras:BackpackName}
+			if name of player's tool is "%{BackpackExtras::BackpackName}%":
+				if {BackpackExtras::BackpackRows} is set:
+					if {BackpackExtras::BackpackRows} > 0:
+						set {_rows} to {BackpackExtras::BackpackRows}
+					else:
+						set {_rows} to 1
+				else:
+					set {_rows} to 1
+				if {BackpackExtras::BackpackName} is set:
+					set {_name} to {BackpackExtras::Backpackname}
+				else:
+					set {_name} to "Plecak"
+				open chest with {_rows} rows named "%{_name}%" to the player
+				loop ({BackpackExtras::BackpackRows} / 9 - 1) times:
+					set player's current inventory slot loop-number to {BackpackExtras::Backpack::%player%::slot::%loop-number%}
+			else if name of player's tool contains "Plecak":
+				cancel event
+				send "%{MSG_NOTYOURBackpack}%" to the player
+		stop
+	send "Nastapil blad. Przedmiot plecaka w pliku konfiguracyjnym nie jest ustawiony!" to the console
+	send "Napraw to jak najszybciej!" to the console
+on inventory close:
+	replace all "(PLAYER)" with "%{_player}%" in {BackpackExtras:BackpackName}
+	if name of player's current inventory is "%{BackpackExtras::BackpackName}%":
+		loop ({BackpackExtras::BackpackRows} / 9 - 1) times:
+			set {BackpackExtras::Backpack::%player%::slot::%loop-number%} to player's current inventory slot loop-number
+		send "%{MSG_CLOSE}%" to the player
+
+on first join:
+	if {BackpackExtras::BackpackItem} is set:
+		if {BackpackExtras::BackpackName} is set:
+			replace all "(PLAYER)" with "%player%" in {BackpackExtras:BackpackName}
+			give 1 {BackpackExtras::BackpackItem} parsed as item type named "%{BackpackExtras::BackpackName}%" to {_player}
+			send "Otrzymales plecak na start!" to the player
